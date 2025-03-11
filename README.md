@@ -101,3 +101,5 @@ Finally we would implement service auto scaling
 # CI/CD
 
 We could build and tag images with the commit SHA instead of latest and we could also use env vars for the region and IAM Role.
+
+We could also do a blue/green deployment to send 10% of traffic for 10 minutes to a new task before switching over.
