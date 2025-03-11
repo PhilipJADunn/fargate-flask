@@ -100,4 +100,4 @@ Finally we would implement service auto scaling
 
 # CI/CD
 
-We could build and tag images with the commit SHA instead of latest.
+We could build and tag images with the commit SHA instead of latest and we could also use env vars for the region and IAM Role.
