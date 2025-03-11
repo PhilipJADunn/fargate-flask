@@ -1,5 +1,0 @@
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 658251713809.dkr.ecr.eu-west-1.amazonaws.com
-docker tag welcome-to-docker 658251713809.dkr.ecr.eu-west-1.amazonaws.com/philips-fargate:latest
-docker push 658251713809.dkr.ecr.eu-west-1.amazonaws.com/philips-fargate:latest
-
-ResourceInitializationError: unable to pull secrets or registry auth: The task cannot pull registry auth from Amazon ECR: There is a connection issue between the task and Amazon ECR. Check your task network configuration. RequestError: send request failed caused by: Post "https://api.ecr.eu-west-1.amazonaws.com/": dial tcp 10.10.9.2:443: i/o timeout
