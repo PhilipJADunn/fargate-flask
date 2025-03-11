@@ -63,3 +63,41 @@ If you have additional time and would like to demonstrate more of your skills, c
 2. `README.md` - This file with instructions
 
 Good luck!
+
+# Walkthrough
+
+## VPC
+
+I opted to use an existing module from the registry that would deploy a VPC, 3 public and 3 private subnets, route tables and also an IGW, NACLs and flow logs.
+I made the decision at this point to not deploy a NAT GW to save on cost as it would not be required.
+
+## Containerisation
+
+I decided to go for a slim image to keep build and deployment time as low as possible, I went for a single stage build as we don't require the use of apt-get to install dependencies, these are stored in requirements.txt
+
+I have created a new user so we are not using root user privileges. This image was tested locally first on localhost:8080 before setting up ECS
+
+## ECS
+
+I opted to build this module myself, I noted a lot of existing modules had networking resources, such as a VPC and subnets so thought best to do this myself, I decided to deploy into a public subnet and fronted requests with an ALB. The reasoning was additionally configuration being require in private subnets via VPC Endpoints. For public subnets I assigned a public IP to tasks otherwise we get failures to ECR.
+
+## CI/CD
+
+My CI/CD experience is mainly in AWS' suite of services so I first read up on some information regarding GitHub Actions. We login to ECR, build and push our image and then update the service with the new task definition.
+
+# Improvements for a production environment
+
+To make this a production ready multi environment service there are some improvements to be made. 
+
+## Terraform
+Firstly, a remote backend, either S3/DynamoDB or TF Cloud. Next we could pull in VPC and Subnet ids via the outputs and store these as locals.
+
+## ECS
+
+We would deploy into private subnets and use VPCEs. Instead of exposing the ALB URL we would deploy a domain name via Route 53 and an ACM cert to secure the traffic over 443. We would also configure container logging.
+
+Finally we would implement service auto scaling
+
+# CI/CD
+
+We could build and tag images with the commit SHA instead of latest.
