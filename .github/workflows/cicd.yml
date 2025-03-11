@@ -2,6 +2,10 @@ name: build & deploy flask app to fargate
 
 on: [push]
 
+env:
+  IAM_ROLE: ${{ vars.IAM_ROLE }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+
 jobs:
   deploy-flask-app-fargate:
     runs-on: ubuntu-latest
@@ -14,8 +18,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::658251713809:role/github-actions-fargate-flask
-          aws-region: eu-west-1
+          role-to-assume: $IAM_ROLE
+          aws-region: $AWS_REGION
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
