@@ -10,7 +10,7 @@ jobs:
       contents: read
     steps:
       - name: checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -18,7 +18,7 @@ jobs:
           aws-region: eu-west-1
       - name: Login to AWS ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition flask-ecs-task --query taskDefinition > task-definition.json
@@ -40,7 +40,7 @@ jobs:
           container-name: flask-app
           image: ${{ steps.build-image.outputs.image }}
       - name: Deploy AWS ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: my-ecs-service
