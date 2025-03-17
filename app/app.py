@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     """Return a simple JSON response with the current time and hostname."""
     return jsonify({
-        'message': 'Hello from the Cloud Engineering Test App!',
+        'message': 'Test123',
         'timestamp': datetime.datetime.now().isoformat(),
         'hostname': socket.gethostname(),
         'version': os.environ.get('APP_VERSION', '1.0.0')
